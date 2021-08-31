@@ -136,19 +136,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case _EN_LANG:
             if (record->event.pressed) {
                 register_code(KC_MHEN);
-                register_code(KC_LANG1);
+                register_code(KC_LANG2);
             } else {
                 unregister_code(KC_MHEN);
-                unregister_code(KC_LANG1);
+                unregister_code(KC_LANG2);
             }
             break;
         case _JP_LANG:
             if (record->event.pressed) {
                 register_code(KC_HENK);
-                register_code(KC_LANG2);
+                register_code(KC_LANG1);
             } else {
                 unregister_code(KC_HENK);
-                unregister_code(KC_LANG2);
+                unregister_code(KC_LANG1);
             }
             break;
     }
