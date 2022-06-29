@@ -11,6 +11,7 @@ enum layer_number {
 enum custom_keycodes {
     _JP_LANG,
     _EN_LANG,
+    _ESC,
 };
 
 
@@ -22,6 +23,9 @@ enum custom_keycodes {
 #define KC_JP_LANG _JP_LANG
 #define KC_EN_LANG _EN_LANG
 
+// Custome ESC, send with _EN_LANG in order to change lang in Vim
+#define KC_ESC_EN_LANG _ESC
+
 // hold key
 #define KC_C_TAB LCTL_T(KC_TAB)      // ctrl
 #define KC_C_BS LCTL_T(KC_BSPC)      // ctrl
@@ -30,13 +34,13 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT( \
     //,--------+--------+---------+--------+---------+--------.   ,--------+---------+--------+---------+--------+--------.
-        KC_ESC , KC_Q   , KC_W    , KC_E   , KC_R    , KC_T   ,     KC_Y   , KC_U    , KC_I   , KC_O    , KC_P   , KC_LBRC,
+        _ESC   , KC_Q   , KC_W    , KC_E   , KC_R    , KC_T   ,     KC_Y   , KC_U    , KC_I   , KC_O    , KC_P   , KC_LBRC,
     //|--------+--------+---------+--------+---------+--------|   |--------+---------+--------+---------+--------+--------|
         KC_C_TAB, KC_A  , KC_S    , KC_D   , KC_F    , KC_G   ,     KC_H   , KC_J    , KC_K   , KC_L    , KC_SCLN, KC_QUOT,
     //|--------+--------+---------+--------+---------+--------|   |--------+---------+--------+---------+--------+--------|
         KC_LSFT, KC_Z   , KC_X    , KC_C   , KC_V    , KC_B   ,     KC_N   , KC_M    , KC_COMM, KC_DOT  , KC_SLSH, KC_RSFT,
     //`--------+--------+---------+--------+---------+--------/   \--------+---------+--------+---------+--------+--------'
-                          KC_LGUI, _EN_LANG, KC_L_SPC, KC_A_DEL,   KC_C_BS, KC_R_ENT, _JP_LANG, KC_RGUI 
+                          KC_LGUI, _EN_LANG, KC_L_SPC, KC_A_DEL,   KC_C_BS, KC_R_ENT, _JP_LANG, KC_RGUI
     //                 `----------+--------+---------+--------'   `--------+---------+--------+---------'
     ),
 
@@ -149,6 +153,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_code(KC_HENK);
                 unregister_code(KC_LANG1);
+            }
+            break;
+        case _ESC:
+            if (record->event.pressed) {
+                register_code(KC_ESC);
+                register_code(KC_MHEN);
+                register_code(KC_LANG2);
+            } else {
+                unregister_code(KC_ESC);
+                unregister_code(KC_MHEN);
+                unregister_code(KC_LANG2);
             }
             break;
     }
